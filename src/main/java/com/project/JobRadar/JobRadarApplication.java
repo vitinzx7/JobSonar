@@ -10,13 +10,20 @@ public class JobRadarApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JobRadarApplication.class, args);
 
-		RestClient client = RestClient.create();   
+		RestClient client = RestClient.create();
 
-		String resposta = client.get()     
-        .uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti&state=Distrito Federal")            
+		JobResponse response = client.get()
+        .uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti&state=Distrito Federal")
         .retrieve()
-        .body(String.class);  
-		System.out.println(resposta);      
+        .body(JobResponse.class);
+
+
+		for(Job job : response.getData())
+			{
+				System.out.println(job.getName());
+				System.out.println(job.getCity());
+
+			}
 	}
 
 }

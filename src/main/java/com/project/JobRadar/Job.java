@@ -1,6 +1,6 @@
 package com.project.JobRadar;
 
-public class Vaga {
+public class Job {
     private Long id;
     private String name;
     private String description;
@@ -46,5 +46,5 @@ public class Vaga {
         this.publishedDate = publishedDate;
     }
 
-    
+
 }
