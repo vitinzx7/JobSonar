@@ -1,5 +1,7 @@
 package com.project.JobRadar;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.client.RestClient;
@@ -13,17 +15,21 @@ public class JobRadarApplication {
 		RestClient client = RestClient.create();
 
 		JobResponse response = client.get()
-        .uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti&state=Distrito Federal")
-        .retrieve()
-        .body(JobResponse.class);
+				.uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti&state=Distrito Federa")
+				.retrieve()
+				.body(JobResponse.class);
 
+		for (Job job : safeJobs(response)) {
+			System.out.println(job.getName());
+			System.out.println(job.getCity());
+		}
+	}
 
-		for(Job job : response.getData())
-			{
-				System.out.println(job.getName());
-				System.out.println(job.getCity());
-
-			}
+	public static List<Job> safeJobs(JobResponse response) {
+		if (response.getData() == null) {
+			return List.of();
+		}
+		return response.getData();
 	}
 
 }
