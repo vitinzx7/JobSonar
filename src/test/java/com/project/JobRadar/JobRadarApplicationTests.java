@@ -1,5 +1,6 @@
 package com.project.JobRadar;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -15,6 +16,15 @@ class JobRadarApplicationTests {
 		JobResponse response = new JobResponse();
 		List<Job> result = JobRadarApplication.safeJobs(response);
 		assertTrue(result.isEmpty());
+	}
+
+	@Test
+	void listfull() {
+		Job vacancy = new Job();
+		JobResponse envelope = new JobResponse();
+		envelope.setData(List.of(vacancy));
+		List<Job> result = JobRadarApplication.safeJobs(envelope);
+		assertEquals(1, result.size());
 	}
 
 }
