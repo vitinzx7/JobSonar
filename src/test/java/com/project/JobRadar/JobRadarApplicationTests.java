@@ -19,7 +19,7 @@ class JobRadarApplicationTests {
 	}
 
 	@Test
-	void listfull() {
+	void listFull() {
 		Job vacancy = new Job();
 		JobResponse envelope = new JobResponse();
 		envelope.setData(List.of(vacancy));

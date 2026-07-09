@@ -15,13 +15,16 @@ public class JobRadarApplication {
 		RestClient client = RestClient.create();
 
 		JobResponse response = client.get()
-				.uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti&state=Distrito Federa")
+				.uri("https://employability-portal.gupy.io/api/v1/jobs?jobName=estagio Ti")
 				.retrieve()
 				.body(JobResponse.class);
 
 		for (Job job : safeJobs(response)) {
+			System.out.println("--------------------------------------------");
 			System.out.println(job.getName());
 			System.out.println(job.getCity());
+			System.out.println(job.getPublishedDate());
+			
 		}
 	}
 
