@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import com.project.JobRadar.Job;
 import com.project.JobRadar.Service.JobService;
 
@@ -19,7 +21,7 @@ public class JobController {
     }
 
     @GetMapping(value = "/jobs")
-    public Job getJob() {
-        return jobService.getExampleJob();
+    public List<Job> getJobs() {
+        return jobService.searchJobs();
     }
 }
