@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.project.JobRadar.Job;
 import com.project.JobRadar.Service.JobService;
+import com.project.JobRadar.dto.JobResponseDto;
 
 
 @RestController
@@ -22,7 +22,7 @@ public class JobController {
     }
 
     @GetMapping(value = "/jobs")
-    public List<Job> getJobs(@RequestParam String jobName) {
+    public List<JobResponseDto> getJobs(@RequestParam String jobName) {
         return jobService.searchJobs(jobName);
     }
 }

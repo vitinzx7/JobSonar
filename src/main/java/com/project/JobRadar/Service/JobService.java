@@ -5,6 +5,7 @@ import org.springframework.web.client.RestClient;
 
 import com.project.JobRadar.Job;
 import com.project.JobRadar.JobResponse;
+import com.project.JobRadar.dto.JobResponseDto;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service
 public class JobService {
 
-    public List<Job> searchJobs(String jobName) {
+    public List<JobResponseDto> searchJobs(String jobName) {
 
         RestClient client = RestClient.create();
 
@@ -22,7 +23,15 @@ public class JobService {
 				.retrieve()
 				.body(JobResponse.class);
 
-        return safeJobs(response).stream().limit(5).toList();
+        return safeJobs(response).stream()
+        .limit(5)
+        .map(job -> new JobResponseDto(
+                job.getName(),
+                job.getCity(),
+                job.getJobUrl(),
+                job.getPublishedDate()
+        ))
+        .toList();
 	}
 
 	public static List<Job> safeJobs(JobResponse response) {
