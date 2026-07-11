@@ -1,16 +1,17 @@
-package com.project.JobRadar;
+package com.project.jobsonnar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import com.project.JobRadar.Service.JobService;
+import com.project.jobsonnar.model.Job;
+import com.project.jobsonnar.service.JobService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JobRadarApplicationTests {
+class JobSonnarApplicationTests {
 
 	@Test
 	void listNull() {

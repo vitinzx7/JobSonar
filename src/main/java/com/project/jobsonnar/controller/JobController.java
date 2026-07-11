@@ -1,13 +1,14 @@
-package com.project.JobRadar.controller;
+package com.project.jobsonnar.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.project.JobRadar.Job;
-import com.project.JobRadar.Service.JobService;
+import com.project.jobsonnar.dto.JobResponseDto;
+import com.project.jobsonnar.service.JobService;
 
 
 @RestController
@@ -21,7 +22,7 @@ public class JobController {
     }
 
     @GetMapping(value = "/jobs")
-    public List<Job> getJobs() {
-        return jobService.searchJobs();
+    public List<JobResponseDto> getJobs(@RequestParam String jobName) {
+        return jobService.searchJobs(jobName);
     }
 }

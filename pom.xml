@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.project</groupId>
-	<artifactId>JobRadar</artifactId>
+	<artifactId>JobSonnar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
+	<name>JobSonnar</name>
 	<description/>
 	<url/>
 	<licenses>
