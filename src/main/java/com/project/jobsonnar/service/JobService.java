@@ -1,11 +1,11 @@
-package com.project.JobRadar.Service;
+package com.project.jobsonnar.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import com.project.JobRadar.Job;
-import com.project.JobRadar.JobResponse;
-import com.project.JobRadar.dto.JobResponseDto;
+import com.project.jobsonnar.JobResponse;
+import com.project.jobsonnar.dto.JobResponseDto;
+import com.project.jobsonnar.model.Job;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

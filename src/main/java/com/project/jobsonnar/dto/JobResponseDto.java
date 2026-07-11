@@ -1,31 +1,24 @@
-package com.project.JobRadar;
+package com.project.jobsonnar.dto;
 
-public class Job {
-    private Long id;
+public class JobResponseDto {
     private String name;
-    private String description;
     private String city;
     private String jobUrl;
     private String publishedDate;
 
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public JobResponseDto(String name, String city, String jobUrl, String publishedDate) {
+            this.name = name;
+            this.city = city;
+            this.jobUrl = jobUrl;
+            this.publishedDate = publishedDate;
+        }
+
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
     }
     public String getCity() {
         return city;
@@ -45,6 +38,4 @@ public class Job {
     public void setPublishedDate(String publishedDate) {
         this.publishedDate = publishedDate;
     }
-
-
 }

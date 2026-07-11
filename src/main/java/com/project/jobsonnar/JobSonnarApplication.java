@@ -1,12 +1,12 @@
-package com.project.JobRadar;
+package com.project.jobsonnar;
 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JobRadarApplication {
+public class JobSonnarApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JobRadarApplication.class, args);
+		SpringApplication.run(JobSonnarApplication.class, args);
 	}}
