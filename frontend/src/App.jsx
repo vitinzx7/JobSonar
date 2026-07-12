@@ -1,6 +1,18 @@
 import './App.css'
 import { useState } from 'react';
 
+function isSafeJobUrl(jobUrl) {
+  try {
+    const url = new URL(jobUrl)
+    const isGupyDomain =
+      url.hostname === 'gupy.io' || url.hostname.endsWith('.gupy.io')
+
+    return url.protocol === 'https:' && isGupyDomain
+  } catch {
+    return false
+  }
+}
+
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [jobs, setJobs] = useState([])
@@ -79,6 +91,18 @@ function App() {
                 <h3>{job.name}</h3>
                 <p>{job.city || 'Local não informado'}</p>
                 <p>{job.publishedDate || 'Data não informada'}</p>
+                {isSafeJobUrl(job.jobUrl) ? (
+                  <a
+                    className="job-link"
+                    href={job.jobUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver vaga
+                  </a>
+                ) : (
+                  <span className="job-link-unavailable">Link indisponível</span>
+                )}
               </article>
             ))}
           </div>
