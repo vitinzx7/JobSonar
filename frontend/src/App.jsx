@@ -68,9 +68,21 @@ function App() {
           <span className="results-count">{jobs.length} vagas</span>
         </div>
 
-        <div className="empty-state">
-          <p>Nenhuma busca realizada.</p>
-        </div>
+        {jobs.length === 0 ? (
+          <div className="empty-state">
+            <p>Nenhuma busca realizada.</p>
+          </div>
+        ) : (
+          <div className="jobs-list">
+            {jobs.map((job) => (
+              <article className="job-card" key={job.jobUrl}>
+                <h3>{job.name}</h3>
+                <p>{job.city || 'Local não informado'}</p>
+                <p>{job.publishedDate || 'Data não informada'}</p>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </main>
   )

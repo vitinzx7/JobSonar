@@ -90,11 +90,7 @@
 }
 
 .results-section {
-  margin-top: 24px;
-  padding: 28px 32px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--surface);
+  margin-top: 32px;
 }
 
 .results-header {
@@ -128,6 +124,46 @@
   margin: 0;
 }
 
+.jobs-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.job-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(140px, 0.65fr) minmax(160px, 0.65fr);
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.job-card:hover {
+  border-color: var(--border-strong);
+}
+
+.job-card h3,
+.job-card p {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.job-card h3 {
+  color: var(--text-strong);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.job-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 820px) {
   .app-shell {
     width: min(100% - 24px, 1120px);
@@ -143,12 +179,13 @@
     grid-template-columns: 1fr;
   }
 
-  .results-section {
-    padding: 24px;
-  }
-
   .results-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .job-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
