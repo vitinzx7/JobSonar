@@ -3,10 +3,28 @@ import { useState } from 'react';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
-      async function handleSearch(event) {
-          event.preventDefault()
-          
-        }
+  const [jobs, setJobs] = useState([])
+
+  async function handleSearch(event) {
+    event.preventDefault()
+
+    const query = searchQuery.trim()
+
+    if (!query) {
+      return
+    }
+
+    const response = await fetch(
+      `http://localhost:8080/jobs?query=${encodeURIComponent(query)}`
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch jobs: ${response.status}`)
+    }
+
+    const jobResults = await response.json()
+    setJobs(jobResults)
+  }
 
   return (
     <main className="app-shell">
@@ -47,7 +65,7 @@ function App() {
             <p className="eyebrow">Results</p>
             <h2 id="results-title">Vagas encontradas</h2>
           </div>
-          <span className="results-count">0 vagas</span>
+          <span className="results-count">{jobs.length} vagas</span>
         </div>
 
         <div className="empty-state">
