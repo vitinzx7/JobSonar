@@ -16,6 +16,9 @@ function isSafeJobUrl(jobUrl) {
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [jobs, setJobs] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [hasSearched, setHasSearched] = useState (false)
 
   async function handleSearch(event) {
     event.preventDefault()
@@ -25,17 +28,29 @@ function App() {
     if (!query) {
       return
     }
+    setHasSearched(true)
+    setErrorMessage('')
+    setIsLoading(true)
 
-    const response = await fetch(
-      `http://localhost:8080/jobs?query=${encodeURIComponent(query)}`
-    )
+    try {
+      const response = await fetch(
+        `http://localhost:8080/jobs?query=${encodeURIComponent(query)}`
+      )
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch jobs: ${response.status}`)
+      if (!response.ok) {
+        throw new Error(`Failed to fetch jobs: ${response.status}`)
+      }
+
+      const jobResults = await response.json()
+      setJobs(jobResults)
+    } catch(error) {
+      console.error('Job search failed', error)
+      setJobs([])
+      setErrorMessage('Não foi possível buscar vagas. Tente novamente.')
     }
-
-    const jobResults = await response.json()
-    setJobs(jobResults)
+    finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -64,8 +79,12 @@ function App() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
-            <button className="search-button" type="submit">
-              Buscar vagas
+            <button
+              className="search-button"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Buscando...' : 'Buscar vagas'}
             </button>
           </div>
         </form>
@@ -80,11 +99,23 @@ function App() {
           <span className="results-count">{jobs.length} vagas</span>
         </div>
 
-        {jobs.length === 0 ? (
-          <div className="empty-state">
-            <p>Nenhuma busca realizada.</p>
+        {errorMessage && (
+          <div className="error-state" role="alert">
+            <p>{errorMessage}</p>
           </div>
-        ) : (
+        )}
+
+        {!errorMessage && jobs.length === 0 && (
+          <div className="empty-state">
+            <p>
+              {hasSearched
+              ? 'Nenhuma vaga encontrada.'
+              : 'Nenhuma busca realizada.'}
+          </p>
+          </div>
+        )}
+
+        {!errorMessage && jobs.length > 0 && (
           <div className="jobs-list">
             {jobs.map((job) => (
               <article className="job-card" key={job.jobUrl}>

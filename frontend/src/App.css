@@ -84,6 +84,15 @@
   background: var(--accent-hover);
 }
 
+.search-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.search-button:disabled:hover {
+  background: var(--accent);
+}
+
 .search-button:focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
@@ -121,6 +130,19 @@
 }
 
 .empty-state p {
+  margin: 0;
+}
+
+.error-state {
+  margin-top: 24px;
+  border: 1px solid var(--error-border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  color: var(--error-text);
+  background: var(--error-surface);
+}
+
+.error-state p {
   margin: 0;
 }
 
