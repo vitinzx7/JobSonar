@@ -17,6 +17,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [jobs, setJobs] = useState([])
 
+  const [isLoading, setIsLoading] = useState(false)
+
   async function handleSearch(event) {
     event.preventDefault()
 
@@ -26,16 +28,22 @@ function App() {
       return
     }
 
-    const response = await fetch(
-      `http://localhost:8080/jobs?query=${encodeURIComponent(query)}`
-    )
+    setIsLoading(true)
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch jobs: ${response.status}`)
+    try {
+      const response = await fetch(
+        `http://localhost:8080/jobs?query=${encodeURIComponent(query)}`
+      )
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch jobs: ${response.status}`)
+      }
+
+      const jobResults = await response.json()
+      setJobs(jobResults)
+    } finally {
+      setIsLoading(false)
     }
-
-    const jobResults = await response.json()
-    setJobs(jobResults)
   }
 
   return (
@@ -64,8 +72,12 @@ function App() {
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
-            <button className="search-button" type="submit">
-              Buscar vagas
+            <button
+              className="search-button"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Buscando...' : 'Buscar vagas'}
             </button>
           </div>
         </form>
