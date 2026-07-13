@@ -16,8 +16,8 @@ function isSafeJobUrl(jobUrl) {
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [jobs, setJobs] = useState([])
-
   const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   async function handleSearch(event) {
     event.preventDefault()
@@ -28,6 +28,7 @@ function App() {
       return
     }
 
+    setErrorMessage('')
     setIsLoading(true)
 
     try {
@@ -41,7 +42,12 @@ function App() {
 
       const jobResults = await response.json()
       setJobs(jobResults)
-    } finally {
+    } catch(error) {
+      console.error('Job search failed', error)
+      setJobs([])
+      setErrorMessage('Não foi possível buscar vagas. Tente novamente.')
+    }
+    finally {
       setIsLoading(false)
     }
   }
@@ -92,11 +98,19 @@ function App() {
           <span className="results-count">{jobs.length} vagas</span>
         </div>
 
-        {jobs.length === 0 ? (
+        {errorMessage && (
+          <div className="error-state" role="alert">
+            <p>{errorMessage}</p>
+          </div>
+        )}
+
+        {!errorMessage && jobs.length === 0 && (
           <div className="empty-state">
             <p>Nenhuma busca realizada.</p>
           </div>
-        ) : (
+        )}
+
+        {!errorMessage && jobs.length > 0 && (
           <div className="jobs-list">
             {jobs.map((job) => (
               <article className="job-card" key={job.jobUrl}>
