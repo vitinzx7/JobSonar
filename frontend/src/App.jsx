@@ -18,6 +18,7 @@ function App() {
   const [jobs, setJobs] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [hasSearched, setHasSearched] = useState (false)
 
   async function handleSearch(event) {
     event.preventDefault()
@@ -27,7 +28,7 @@ function App() {
     if (!query) {
       return
     }
-
+    setHasSearched(true)
     setErrorMessage('')
     setIsLoading(true)
 
@@ -106,7 +107,11 @@ function App() {
 
         {!errorMessage && jobs.length === 0 && (
           <div className="empty-state">
-            <p>Nenhuma busca realizada.</p>
+            <p>
+              {hasSearched
+              ? 'Nenhuma vaga encontrada.'
+              : 'Nenhuma busca realizada.'}
+          </p>
           </div>
         )}
 
