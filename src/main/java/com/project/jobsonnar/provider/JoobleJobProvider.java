@@ -4,13 +4,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
+import java.util.List;
+
 import com.project.jobsonnar.dto.jooble.JoobleSearchResponseDto;
+import com.project.jobsonnar.dto.JobResponseDto;
+import com.project.jobsonnar.dto.jooble.JoobleJobDto;
 import com.project.jobsonnar.dto.jooble.JoobleSearchRequestDto;
 
 @Component
 public class JoobleJobProvider {
     private final String apiKey;
     private final RestClient restClient;
+
 
     public JoobleJobProvider(@Value("${jooble.api.key}") String apiKey, RestClient.Builder restClientBuilder) {
         this.apiKey = apiKey;
@@ -30,14 +35,36 @@ public class JoobleJobProvider {
         return request;
     }
 
-    public JoobleSearchResponseDto searchJobs(String query) {
+    private JobResponseDto toJobResponseDto(JoobleJobDto job) {
+        return new JobResponseDto(
+                job.getTitle(),
+                job.getLocation(),
+                job.getLink(),
+                job.getUpdated()
+        );
+    }
+
+
+    public List<JobResponseDto> searchJobs(String query) {
         JoobleSearchRequestDto request = buildJoobleSearchRequestDto(query);
 
-        return restClient
+           JoobleSearchResponseDto response = restClient
+
             .post()
             .uri("/api/{apiKey}", apiKey)
             .body(request)
             .retrieve()
             .body(JoobleSearchResponseDto.class);
+
+         return toJobResponseDtos(response);
+    } 
+
+    private List<JobResponseDto> toJobResponseDtos(JoobleSearchResponseDto response) {
+        if (response == null || response.getJobs() == null) {
+            return List.of();
+        }
+        return response.getJobs().stream()
+                .map(this::toJobResponseDto)
+                .toList();
     }
 }
