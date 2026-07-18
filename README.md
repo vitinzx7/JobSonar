@@ -1,4 +1,3 @@
-````markdown
 # JobSonnar
 
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?logo=openjdk&logoColor=white)
@@ -141,4 +140,3 @@ Exemplo do formato retornado:
 - [ ] Criar alertas automáticos de novas vagas por e-mail.
 - [ ] Adicionar autenticação antes de armazenar dados pessoais.
 - [ ] Ampliar testes e automatizar as verificações com CI.
-````
