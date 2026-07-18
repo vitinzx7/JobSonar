@@ -6,13 +6,20 @@ import org.springframework.web.client.RestClient;
 import com.project.jobsonnar.JobResponse;
 import com.project.jobsonnar.dto.JobResponseDto;
 import com.project.jobsonnar.model.Job;
+import com.project.jobsonnar.provider.JoobleJobProvider;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class JobService {
+    private final JoobleJobProvider joobleJobProvider;
+
+    public JobService(JoobleJobProvider joobleJobProvider) {
+        this.joobleJobProvider = joobleJobProvider;
+    }
 
     public List<JobResponseDto> searchJobs(String query) {
 
@@ -23,7 +30,7 @@ public class JobService {
 				.retrieve()
 				.body(JobResponse.class);
 
-        return safeJobs(response).stream()
+        List<JobResponseDto> gupyJobs = safeJobs(response).stream()
         .limit(5)
         .map(job -> new JobResponseDto(
                 job.getName(),
@@ -32,6 +39,12 @@ public class JobService {
                 job.getPublishedDate()
         ))
         .toList();
+
+        List<JobResponseDto> joobleJobs = joobleJobProvider.searchJobs(query);
+        List<JobResponseDto> allJobs = new ArrayList<>(gupyJobs);
+
+        allJobs.addAll(joobleJobs);
+        return allJobs;
 	}
 
 	public static List<Job> safeJobs(JobResponse response) {
@@ -40,5 +53,6 @@ public class JobService {
 		}
 		return response.getData();
 	}
+
     
 }

@@ -8,9 +8,7 @@ import java.util.List;
 import com.project.jobsonnar.model.Job;
 import com.project.jobsonnar.service.JobService;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class JobSonnarApplicationTests {
 
 	@Test

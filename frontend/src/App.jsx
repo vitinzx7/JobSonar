@@ -7,7 +7,10 @@ function isSafeJobUrl(jobUrl) {
     const isGupyDomain =
       url.hostname === 'gupy.io' || url.hostname.endsWith('.gupy.io')
 
-    return url.protocol === 'https:' && isGupyDomain
+      const isJoobleDomain = 
+        url.hostname === 'jooble.org' || url.hostname.endsWith('.jooble.org')
+
+      return url.protocol === 'https:' && (isGupyDomain || isJoobleDomain)
   } catch {
     return false
   }
